@@ -1,10 +1,10 @@
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from flask import Flask
 
-class SimpleServer(BaseHTTPRequestHandler):
-    def do_GET(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'text/html')
-        self.end_headers()
-        self.wfile.write(b"<h1>Bina PIP ke AWS chal gaya! Account verified hai.</h1>")
+app = Flask(__name__)
 
-HTTPServer(('0.0.0.0', 8080), SimpleServer).serve_forever()
+@app.route('/')
+def home():
+    return "<h1>Flask Test Successful! PIP is working! 🚀</h1>"
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080)
