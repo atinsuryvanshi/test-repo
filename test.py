@@ -1,11 +1,10 @@
-from flask import Flask
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
-app = Flask(__name__)
+class SimpleServer(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
+        self.wfile.write(b"<h1>Bina PIP ke AWS chal gaya! Account verified hai.</h1>")
 
-@app.route('/')
-def home():
-    return "<h1>System Test Successful: High-Frequency Bot Server is Live! 🚀</h1>"
-
-if __name__ == '__main__':
-    # AWS ke liye host '0.0.0.0' aur port 8080 hona zaroori hai
-    app.run(host='0.0.0.0', port=8080)
+HTTPServer(('0.0.0.0', 8080), SimpleServer).serve_forever()
